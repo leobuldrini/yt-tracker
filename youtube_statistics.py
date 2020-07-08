@@ -11,7 +11,6 @@ class YTstats:
 
     def get_channel_statistics(self):
         url = f'https://www.googleapis.com/youtube/v3/channels?part=statistics&id={self.channel_id}&key={self.api_key}'
-        print(url)
         json_url = requests.get(url)
         data = json.loads(json_url.text)
         try:
@@ -37,7 +36,8 @@ class YTstats:
         return channel_videos
 
     def _get_single_video_data(self, video_id, part):
-        url = f'https://www.googleapis.com/youtube/v3/videos?part={part}&id{video_id}&key{self.api_key}'
+        url = f'https://www.googleapis.com/youtube/v3/videos?part={part}&id={video_id}&key={self.api_key}'
+        print(url)
         json_url = requests.get(url)
         data = json.loads(json_url.text)
         try:
@@ -55,8 +55,6 @@ class YTstats:
             url += "&maxResults=" + str(limit)
         else:
             url = url
-        print(url)
-        print('ok 1')
         vid, npt = self._get_channel_videos_per_page(url)
         idx = 0
         while(npt is not None and idx < 10):
