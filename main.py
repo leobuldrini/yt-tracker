@@ -5,7 +5,9 @@ from youtube_statistics import YTstats
 API_KEY = "AIzaSyA5OpjLeWdzFpCHcP6Vbs5Ae6mjIKkm8Rc"
 channel_id = "UCK-rDvDp1O1uxxwLUHgt1gQ"
 
-yt = YTstats(API_KEY, channel_id)
-yt.get_channel_statistics()
-yt.get_channel_video_data()
-yt.dump()
+def createJSON():
+    yt = YTstats(API_KEY, channel_id)
+    yt.get_channel_statistics()
+    yt.get_channel_video_data()
+    yt.dump()
+
