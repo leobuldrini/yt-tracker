@@ -24,7 +24,7 @@ class YTstats:
     def get_channel_video_data(self):
         # get videos ids
         channel_videos = self._get_channel_videos(limit=50)
-        print(len(channel_videos))
+        print("Videos: " + str(len(channel_videos)))
         # get video statistics
         parts = ["snippet", "statistics", "contentDetails"]
         for video_id in tqdm(channel_videos):
@@ -37,7 +37,7 @@ class YTstats:
 
     def _get_single_video_data(self, video_id, part):
         url = f'https://www.googleapis.com/youtube/v3/videos?part={part}&id={video_id}&key={self.api_key}'
-        print(url)
+        #print(url)
         json_url = requests.get(url)
         data = json.loads(json_url.text)
         try:
@@ -62,7 +62,6 @@ class YTstats:
             next_vid, npt = self._get_channel_videos_per_page(nexturl)
             vid.update(next_vid)
             idx += 1
-            print('ok 2')
 
         return vid
 
@@ -92,9 +91,8 @@ class YTstats:
             print('video data is none')
             return
 
-        fused_data = {self.channel_id: {"channel_statistics": self.channel_statistics, "video_data": self.video_data}}
+        fused_data = {self.channel_id: {"channel_statistics": self.channel_statistics, "dados_do_video": self.video_data}}
 
-        
         channel_title = self.video_data.popitem()[1].get('channelTitle', self.channel_id)
         channel_title = channel_title.replace(" ", "_").lower()
         file_name = channel_title + '.json'
